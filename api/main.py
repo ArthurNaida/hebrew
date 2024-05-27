@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -34,3 +35,5 @@ async def root():
     with open('words_data.json') as f:
         words_data = json.load(f)
     return words_data
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
