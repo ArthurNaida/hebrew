@@ -62,7 +62,7 @@ export default {
       try {
       this.isAxiosLoad = true;
       await axios({
-        url: "http://127.0.0.1:8000/post", 
+        url: "https://hebrew-gztg.onrender.com/post", 
         method: 'post',
         data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${this.letter1}&r2=${this.letter2}&r1=${this.letter3}`}),
         headers: {
@@ -74,7 +74,7 @@ export default {
       .then(res => {console.log(res); this.isAxiosError = false})
       } catch(e) {console.log('catch' ); this.isAxiosError = true}
       try {
-      await axios.get("http://127.0.0.1:8000/get")
+      await axios.get("https://hebrew-gztg.onrender.com/get")
       .then(res => {
         this.isAxiosError = false
         if (res.data[0] !== 0) {
