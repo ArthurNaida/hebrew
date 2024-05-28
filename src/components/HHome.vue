@@ -17,11 +17,17 @@
     </form> 
   </div>
   <div class="container-response" v-if="!isAxiosLoad">
-    <div class="main-table" v-if="words[0] != 0 && !isAxiosError">
+    <div class="main-table" v-if="words[0] != 0 && !isAxiosError && !isMobile"> 
       <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>
       <h-column class="content" :words="words" :partOfSpeech="'Прилагательное'">Прилагательные</h-column>
       <h-column class="content" :words="words" :partOfSpeech="'Глагол'">Глаголы</h-column>
     </div>
+    <h-Accordion v-else-if="words[0] != 0 && !isAxiosError && isMobile"
+    :titles="['Существительные', 'Прилагательные', 'Глаголы']">
+    <template v-for="word in this.words" :key="word">
+      {{word[0]}}<br>
+    </template>
+    </h-Accordion>
     <div class="error" v-else-if="isAxiosError">
       <h1>Какая-то ошибка...</h1>
     </div>
@@ -41,7 +47,9 @@
 import VueLoading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
 import HColumn from './HColumn.vue';
+import HAccordion from './HAccordion.vue'
 import axios from "axios"
+import { ref } from 'vue';
 export default {
   name: 'h-home',
   data() {
@@ -55,7 +63,13 @@ export default {
     }
   },
   components: {
-    HColumn, VueLoading
+    HColumn, VueLoading, HAccordion
+  },
+  computed: {
+    isMobile() {
+      console.log(ref(window.innerWidth).value)
+      return ref(window.innerWidth).value > 600 ? false : true
+    }
   },
   methods: {
     async onSubmit() {
