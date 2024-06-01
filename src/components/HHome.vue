@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h-search-root @submit="(...letters) => onSubmit(...letters)" class="root-container"></h-search-root>
+  <h-search-root @submitRoot="(...letters) => onSubmit(...letters)" class="root-container"></h-search-root>
   <div class="container-response" v-if="!isAxiosLoad">
     <div class="main-table" v-if="words[0] != 0 && !isAxiosError && !isMobile"> 
       <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>
@@ -74,7 +74,6 @@ export default {
       // await axios.get("http://127.0.0.1:8000")
       .then(res => {
         this.isAxiosError = false
-        
         console.log(this.words)
         if (res.data[0] !== 0) {
           this.words = Object.entries(res.data)
