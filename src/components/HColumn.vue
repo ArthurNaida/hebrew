@@ -1,17 +1,18 @@
 <template>
-<div class="container">
+<h-border class="container">
   <h2 class="title"><slot></slot></h2>
-  <div class="separator"></div>
   <div class="list">
-    <template v-for="word in this.words" :key="word">
-      <div class="word" v-if="word[1] === partOfSpeech">{{word[0]}}</div>
+    <template v-for="([word, wordPartOfSpeech], index) in words" :key="index">
+      <div class="word" v-if="wordPartOfSpeech === partOfSpeech">{{word}}</div>
     </template>
   </div>
-</div>
+</h-border>
 </template>
 
 <script>
+import HBorder from './HBorder.vue'
 export default {
+  components: { HBorder },
 name: 'h-column',
 props: {
   words: Array,
@@ -22,17 +23,19 @@ props: {
 
 <style scoped>
 .container {
-  padding-top: 20px;
-  width: 20%;
-  border: 2px black solid;
   margin: 20px;
-  border-radius: 10px;
 }
-.separator {
-  border-bottom: 2px solid #000;
+.list {
+  border-top: 2px solid #000;
+}
+.list:empty {
+  display: none;
 }
 .word {
   padding: 5px 0px;
+}
+.separator {
+  border-bottom: 2px solid #000;
 }
 .word:not(:last-child) {
   border-bottom: 1px solid #000;
