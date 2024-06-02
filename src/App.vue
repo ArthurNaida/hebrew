@@ -19,10 +19,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--bs-light);
+  --main-white: var(--bs-light);
+  --main-dark: var(--bs-gray-dark);
   width: 100vw;
   height: 100vh;
-  --layout-bg-color: var(--bs-primary); 
+  --layout-bg-color: #00308F; 
   background-color: var(--layout-bg-color);
 }
 </style>

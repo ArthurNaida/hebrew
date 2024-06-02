@@ -10,7 +10,7 @@
             <h1>.</h1>
             <input v-model="letter1" pattern="[א-ת]" maxlength="1" size="1" required>
           </div>
-          <input type="submit" value="Отправить">
+          <h-submit class="submit" :value="'Отправить'"></h-submit>
         </form> 
       </div>
 </h-border>
@@ -18,9 +18,10 @@
 
 <script>
 import HBorder from './HBorder.vue';
+import HSubmit from './HSubmit.vue';
 export default {
 name: 'h-search-root',
-components: {HBorder},
+components: {HBorder, HSubmit},
 data() {
     return {
         letter1: '',
@@ -33,9 +34,13 @@ data() {
 
 <style scoped>
 input {
-    border: 0px;
-    border-bottom: 3px solid #000;
+    border: 0;
+    border-bottom: 2px solid #000;
     font-size: 56px;
+    background: var(--main-white);
+}
+input:focus-visible {
+    border: 0;
 }
 .root-input {
     display: flex;
@@ -46,9 +51,8 @@ input {
     width: 20px;
     display: block;
 }
-input[type=submit] {
+.submit {
     cursor: pointer;
     margin-top: 20px;
-    font-size: 2rem;
 }
 </style>

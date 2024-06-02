@@ -1,22 +1,22 @@
 <template>
-<h-border class="relative">
+<!-- <h-border class="relative"> -->
     <VueLoading class="spinner"
     :active="true" 
     :is-full-page="false" 
     :z-index="99"
-    :background-color="'inherit'"
+    :color="'var(--main-white)'"
     :opacity="0">
     </VueLoading>
-</h-border>
+<!-- </h-border> -->
 </template>
 
 <script>
 import VueLoading from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
-import HBorder from './HBorder.vue';
+// import HBorder from './HBorder.vue';
 export default {
 name: 'h-loading',
-components: {VueLoading, HBorder},
+components: {VueLoading},
 props: {
     active: Boolean
 }

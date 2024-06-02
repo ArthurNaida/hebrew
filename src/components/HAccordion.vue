@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion" id="accordionExample">
+    <div class="accordion" id="accordion">
         <div class="accordion-item" v-for="(title, index) in titles" :key="index">
           <h2 class="accordion-header" :id="`heading${index}`">
             <button class="accordion-button" 
