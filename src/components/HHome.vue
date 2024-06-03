@@ -7,10 +7,7 @@
       <h-column class="content" :words="words" :partOfSpeech="'Прилагательное'">Прилагательные</h-column>
       <h-column class="content" :words="words" :partOfSpeech="'Глагол'">Глаголы</h-column>
     </div>
-    <h-accordion v-else-if="words[0] != 0 && !isAxiosError && isMobile"
-    :titles="['Существительные', 'Прилагательные', 'Глаголы']">
-    <h-words-list :words="words" :partOfSpeech="'Существительное'"></h-words-list>
-    </h-accordion>
+    <h-words-accordion v-else-if="words[0] != 0 && !isAxiosError && isMobile" :words="words"></h-words-accordion>
     <h-border class="error" v-else-if="isAxiosError">
       <h1>Какая-то ошибка...</h1>
     </h-border>
@@ -27,7 +24,7 @@
 <script>
 import HColumn from './HColumn.vue';
 import HLoading from './HLoading.vue'
-import HAccordion from './HAccordion.vue'
+import HWordsAccordion from './HWordsAccordion.vue'
 import axios from "axios"
 import { ref } from 'vue';
 import HSearchForm from './HSearchForm.vue';
@@ -42,7 +39,7 @@ export default {
     }
   },
   components: {
-    HColumn, HAccordion, HLoading,
+    HColumn, HWordsAccordion, HLoading,
     HSearchForm, HBorder
   },
   computed: {
