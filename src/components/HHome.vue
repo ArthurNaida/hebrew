@@ -1,21 +1,28 @@
 <template>
 <div class="container">
   <h-search-form @submitRoot="(letters) => onSubmit(letters, 'https://hebrew-gztg.onrender.com')" class="root-container"></h-search-form>
-  <div class="container-response" v-if="!isAxiosLoad">
-    <div class="main-table" v-if="words[0] != 0 && !isAxiosError && !isMobile"> 
-      <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>
-      <h-column class="content" :words="words" :partOfSpeech="'Прилагательное'">Прилагательные</h-column>
-      <h-column class="content" :words="words" :partOfSpeech="'Глагол'">Глаголы</h-column>
+  
+  <Transition name="slide-fade">
+  <div class="container-response">
+    <Transition name="slide-fade">
+    <div class="main-table" v-if="!isAxiosLoad && words[0] != 0 && !isAxiosError && !isMobile">
+      <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>      
+      <h-column class="content" :words="words" :partOfSpeech="'Прилагательное'">Прилагательные</h-column>            
+      <h-column class="content" :words="words" :partOfSpeech="'Глагол'">Глаголы</h-column>     
     </div>
-    <h-words-accordion v-else-if="words[0] != 0 && !isAxiosError && isMobile" :words="words"></h-words-accordion>
-    <h-border class="error" v-else-if="isAxiosError">
+    </Transition>
+    <Transition name="slide-fade">
+      <h-words-accordion v-if="!isAxiosLoad && words[0] != 0 && !isAxiosError && isMobile" :words="words"></h-words-accordion>
+    </Transition>
+    <h-border class="error" v-if="!isAxiosLoad && isAxiosError">
       <h1>Какая-то ошибка...</h1>
     </h-border>
-    <h-border class="error" v-else>
+    <h-border class="error" v-if="!isAxiosLoad && !isAxiosError && words[0] == 0">
       <h1>Нет слов с таким корнем!</h1>
     </h-border>
   </div>
-  <div class="loader-container" v-else>
+  </Transition>
+  <div class="loader-container" v-if="isAxiosLoad">
     <h-loading></h-loading>
   </div>
 </div>
@@ -35,8 +42,21 @@ export default {
     let isAxiosLoad = ref(false);
     let isAxiosError = ref(false);
     const words = ref({});
+
+    const windowSize = ref({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+    function useWindowResize() {
+    window.addEventListener('resize', () => {
+        windowSize.value.width = window.innerWidth;
+        windowSize.value.height = window.innerHeight;
+      })
+    }
+
+    useWindowResize()
     const isMobile = computed(() => {
-      return ref(window.innerWidth).value > 600 ? false : true
+      return windowSize.value.width > 600 ? false : true
     })
     const parseWords = (res) => {
       if (res.data[0] !== 0) {
@@ -82,68 +102,24 @@ export default {
       onSubmit, getWords, sendRoot, parseWords
     }
   },
-  // data() {
-  //   return {
-  //     isAxiosLoad: false,
-  //     isAxiosError: false,
-  //     words: {},
-  //   }
-  // },
   components: {
     HColumn, HWordsAccordion, HLoading,
     HSearchForm, HBorder
   },
-  // computed: {
-  //   isMobile() {
-  //     return ref(window.innerWidth).value > 600 ? false : true
-  //   },
-  // },
-  // methods: {
-  //   parseWords(res) {
-  //     if (res.data[0] !== 0) {
-  //         this.words = Object.entries(res.data)
-  //     }
-  //     else {
-  //       this.words[0] = 0
-  //     }
-  //   },
-  //   async sendRoot(letters, serverUrl) {
-  //     const {letter1, letter2, letter3} = letters;
-  //     await axios({
-  //       url: `${serverUrl}/post`,
-  //       method: 'post',
-  //       data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${letter1}&r2=${letter2}&r1=${letter3}`}),
-  //       headers: {
-  //         'Accept' : 'application/json',
-  //         "Content-Type": 'application/json'
-  //       }
-  //     })
-  //     .then(() => {this.isAxiosError = false})
-  //   },
-  //   async getWords(serverUrl) {
-  //     await axios.get(`${serverUrl}/get`)
-  //     .then(res => {
-  //       this.parseWords(res);
-  //     })  
-  //   },
-  //   async onSubmit(letters, serverUrl) {
-  //     try {
-  //       this.isAxiosLoad = true;
-  //       await this.sendRoot(letters, serverUrl);
-  //     } catch(e) {this.isAxiosError = true}
-
-  //     try {
-  //       await this.getWords(serverUrl);
-  //     } catch (e) {this.isAxiosError = true} 
-  //     finally {this.isAxiosLoad = false}
-  //   }
-  
 }
 </script>
 
 <style>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+.slide-fade-enter-from {
+  transform: translateX(20px);
+  opacity: 0;
+}
 .container {
   padding: 20px;
+  position: relative;
 }
 .main-table {
   display: flex;
@@ -156,4 +132,5 @@ export default {
 .error {
   margin: auto;
 }
+
 </style>
