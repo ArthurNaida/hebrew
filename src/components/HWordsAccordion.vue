@@ -1,40 +1,61 @@
 <template>
     <h-accordion
-    :titles="titles"
-    @emitTitle="(title) => {console.log(title); rule(title)}">
-      <h-words-list v-if="currentPartOfSpeech !== undefined || currentPartOfSpeech !== ''"
-      :words="words"
-      :partOfSpeech="currentPartOfSpeech"></h-words-list>
+    :titles="titles">
+        <template v-for="(partOfSpeech, index) in partsOfSpeech" v-slot:[index] :key="index">
+            <!-- <template #[index]> -->
+            <h-words-list
+            :words="words"
+            :partOfSpeech="partOfSpeech.name">
+            </h-words-list>
+            <!-- </template> -->
+        </template>
     </h-accordion>
 </template>
 
 <script>
 import HAccordion from './HAccordion.vue';
 import HWordsList from './HWordsList.vue';
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 
 export default {
 name: 'h-words-accordion',
 emits: ['onSubmitRoot'],
 setup() {
-    const titles = ref(['Существительные', 'Прилагательные', 'Глаголы']);
-    const partsOfSpeech = ref(['Существительное', 'Прилагательное', 'Глагол']);
-    let currentPartOfSpeech = ref('');
+    // const titles = ref(['Существительные', 'Прилагательные', 'Глаголы']);
+    const partsOfSpeech = ref([
+        {
+            name: 'Существительное',
+            group: 'Существительные' 
+        },
+        {
+            name: 'Прилагательное',
+            group: 'Прилагательные'
+        },
+        {
+            name: 'Глагол',
+            group: 'Глаголы' 
+        }
+    ]);
+    const titles = computed(() => {
+        return partsOfSpeech.value.map((e) => e.group)
+    })
+    
+    console.log(titles)
+    // let currentPartOfSpeech = ref('');
 
-    const rule = title => {
-        titles.value.forEach((e, index) => {
-            if (title === e) {
-                console.log('e')
-                currentPartOfSpeech.value = partsOfSpeech.value[index];
-            }
-        })
+    // const rule = title => {
+    //     titles.value.forEach((e, index) => {
+    //         if (title === e) {
+    //             console.log('e')
+    //             currentPartOfSpeech.value = partsOfSpeech.value[index];
+    //         }
+    //     })
         
-        console.log(currentPartOfSpeech)
-    }
+    //     console.log(currentPartOfSpeech)
+    // }
 
     return {
-        titles, partsOfSpeech, currentPartOfSpeech,
-        rule
+        titles, partsOfSpeech
     }
 },
 // data() {

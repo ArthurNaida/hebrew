@@ -1,8 +1,8 @@
 <template>
     <div class="accordion" id="accordion">
-        <div class="accordion-item" @click="$emit('emitTitle', title)" v-for="(title, index) in titles" :key="index">
+        <div class="accordion-item" v-for="(title, index) in titles" :key="index">
           <h2 class="accordion-header" :id="`heading${index}`">
-            <button class="accordion-button" 
+            <button class="accordion-button"
             type="button" 
             data-bs-toggle="collapse" 
             :data-bs-target="`#collapse${index}`" 
@@ -15,18 +15,22 @@
           :aria-labelledby="`heading${index}`" 
           data-bs-parent="#accordion">
             <div class="accordion-body">
-              <slot></slot>
+              <slot :name="index"></slot>
             </div>
           </div>
         </div>
       </div>
 </template>
 
-<script>
+<script lang="ts">
 export default{
-name: 'h-accordion',
-props: {
-  titles: Array,
-},
+  name: 'h-accordion'
 }
+</script>
+
+<script lang="ts" setup>
+import {defineProps} from 'vue'
+defineProps<{titles: Array<string>}>();
+// console.log(props)
+// return {props}
 </script>
