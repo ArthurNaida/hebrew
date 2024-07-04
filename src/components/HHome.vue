@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h-search-form @submitRoot="(...letters) => onSubmit(letters, 'https://hebrew-gztg.onrender.com')" class="root-container"></h-search-form>
+  <h-search-form @submitRoot="(letters) => onSubmit(letters, 'https://hebrew-gztg.onrender.com')" class="root-container"></h-search-form>
   <div class="container-response" v-if="!isAxiosLoad">
     <div class="main-table" v-if="words[0] != 0 && !isAxiosError && !isMobile"> 
       <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>
@@ -26,41 +26,30 @@ import HColumn from './HColumn.vue';
 import HLoading from './HLoading.vue'
 import HWordsAccordion from './HWordsAccordion.vue'
 import axios from "axios"
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import HSearchForm from './HSearchForm.vue';
 import HBorder from './HBorder.vue';
 export default {
   name: 'h-home',
-  data() {
-    return {
-      isAxiosLoad: false,
-      isAxiosError: false,
-      words: {},
-    }
-  },
-  components: {
-    HColumn, HWordsAccordion, HLoading,
-    HSearchForm, HBorder
-  },
-  computed: {
-    isMobile() {
+  setup() {
+    let isAxiosLoad = ref(false);
+    let isAxiosError = ref(false);
+    const words = ref({});
+    const isMobile = computed(() => {
       return ref(window.innerWidth).value > 600 ? false : true
-    },
-  },
-  methods: {
-    parseWords(res) {
+    })
+    const parseWords = (res) => {
       if (res.data[0] !== 0) {
-          this.words = Object.entries(res.data)
+        words.value = Object.entries(res.data)
       }
       else {
-        this.words[0] = 0
+        words.value[0] = 0
       }
-    },
-    async sendRoot(letters, serverUrl) {
-      const [letter1, letter2, letter3] = letters;
+    } 
+    const sendRoot = async(letters, serverUrl) => {
+      const {letter1, letter2, letter3} = letters;
       await axios({
         url: `${serverUrl}/post`,
-        // url: "http://127.0.0.1:8000", 
         method: 'post',
         data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${letter1}&r2=${letter2}&r1=${letter3}`}),
         headers: {
@@ -68,27 +57,87 @@ export default {
           "Content-Type": 'application/json'
         }
       })
-      .then(() => {this.isAxiosError = false})
-    },
-    async getWords(serverUrl) {
+      .then(() => {isAxiosError.value = false})
+    } 
+    const getWords = async(serverUrl) => {
       await axios.get(`${serverUrl}/get`)
-      // await axios.get("http://127.0.0.1:8000")
       .then(res => {
-        this.parseWords(res);
+        parseWords(res);
       })  
-    },
-    async onSubmit(letters, serverUrl) {
+    } 
+    const onSubmit = async(letters, serverUrl) => {
       try {
-        this.isAxiosLoad = true;
-        await this.sendRoot(letters, serverUrl);
-      } catch(e) {this.isAxiosError = true}
+        isAxiosLoad.value = true;
+        await sendRoot(letters, serverUrl);
+      } catch(e) {isAxiosError.value = true}
 
       try {
-        await this.getWords(serverUrl);
-      } catch (e) {this.isAxiosError = true} 
-      finally {this.isAxiosLoad = false}
+        await getWords(serverUrl);
+      } catch (e) {isAxiosError.value = true} 
+      finally {isAxiosLoad.value = false}
     }
-  }
+    return {
+      isAxiosError, isAxiosLoad, words,
+      isMobile,
+      onSubmit, getWords, sendRoot, parseWords
+    }
+  },
+  // data() {
+  //   return {
+  //     isAxiosLoad: false,
+  //     isAxiosError: false,
+  //     words: {},
+  //   }
+  // },
+  components: {
+    HColumn, HWordsAccordion, HLoading,
+    HSearchForm, HBorder
+  },
+  // computed: {
+  //   isMobile() {
+  //     return ref(window.innerWidth).value > 600 ? false : true
+  //   },
+  // },
+  // methods: {
+  //   parseWords(res) {
+  //     if (res.data[0] !== 0) {
+  //         this.words = Object.entries(res.data)
+  //     }
+  //     else {
+  //       this.words[0] = 0
+  //     }
+  //   },
+  //   async sendRoot(letters, serverUrl) {
+  //     const {letter1, letter2, letter3} = letters;
+  //     await axios({
+  //       url: `${serverUrl}/post`,
+  //       method: 'post',
+  //       data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${letter1}&r2=${letter2}&r1=${letter3}`}),
+  //       headers: {
+  //         'Accept' : 'application/json',
+  //         "Content-Type": 'application/json'
+  //       }
+  //     })
+  //     .then(() => {this.isAxiosError = false})
+  //   },
+  //   async getWords(serverUrl) {
+  //     await axios.get(`${serverUrl}/get`)
+  //     .then(res => {
+  //       this.parseWords(res);
+  //     })  
+  //   },
+  //   async onSubmit(letters, serverUrl) {
+  //     try {
+  //       this.isAxiosLoad = true;
+  //       await this.sendRoot(letters, serverUrl);
+  //     } catch(e) {this.isAxiosError = true}
+
+  //     try {
+  //       await this.getWords(serverUrl);
+  //     } catch (e) {this.isAxiosError = true} 
+  //     finally {this.isAxiosLoad = false}
+  //   }
+  
 }
 </script>
 

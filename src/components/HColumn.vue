@@ -11,7 +11,7 @@
 import HBorder from './HBorder.vue'
 import HWordsList from './HWordsList.vue'
 export default {
-  components: { HBorder, HWordsList},
+components: { HBorder, HWordsList},
 name: 'h-column',
 props: {
   words: Array,

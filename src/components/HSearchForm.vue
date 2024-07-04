@@ -2,13 +2,13 @@
 <h-border>
     <div class="root-container">
         <h2>Введите корень слова на иврите</h2>
-        <form @submit.prevent="$emit('submitRoot', letter1, letter2, letter3)">
+        <form @submit.prevent="onSubmitRoot">
           <div class="root-input">
-            <input v-model="letter3" pattern="[א-ת]" maxlength="1" size="1" required>
+            <input v-model="letters.letter3" pattern="[א-ת]" maxlength="1" size="1" required>
             <h1>.</h1>
-            <input v-model="letter2" pattern="[א-ת]" maxlength="1" size="1" required>
+            <input v-model="letters.letter2" pattern="[א-ת]" maxlength="1" size="1" required>
             <h1>.</h1>
-            <input v-model="letter1" pattern="[א-ת]" maxlength="1" size="1" required>
+            <input v-model="letters.letter1" pattern="[א-ת]" maxlength="1" size="1" required>
           </div>
           <h-submit class="submit" :value="'Отправить'"></h-submit>
         </form> 
@@ -22,13 +22,29 @@ import HSubmit from './HSubmit.vue';
 export default {
 name: 'h-search-root',
 components: {HBorder, HSubmit},
-data() {
-    return {
+setup(_, {emit}) {
+    const letters = {
         letter1: '',
         letter2: '',
         letter3: ''
     }
+    
+    const onSubmitRoot = () => {
+        emit('submitRoot', letters)
+    }
+
+    return {
+        letters,
+        onSubmitRoot
+    }
 }
+// data() {
+//     return {
+//         letter1: '',
+//         letter2: '',
+//         letter3: ''
+//     }
+// }
 }
 </script>
 

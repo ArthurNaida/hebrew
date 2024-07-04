@@ -11,28 +11,51 @@
 <script>
 import HAccordion from './HAccordion.vue';
 import HWordsList from './HWordsList.vue';
+import {ref} from 'vue';
 
 export default {
 name: 'h-words-accordion',
-data() {
-    return {
-        titles: ['Существительные', 'Прилагательные', 'Глаголы'],
-        partsOfSpeech: ['Существительное', 'Прилагательное', 'Глагол'],
-        currentPartOfSpeech: ''
-    }
-},
-methods: {
-    rule(title) {
-        this.titles.forEach((e, index) => {
+emits: ['onSubmitRoot'],
+setup() {
+    const titles = ref(['Существительные', 'Прилагательные', 'Глаголы']);
+    const partsOfSpeech = ref(['Существительное', 'Прилагательное', 'Глагол']);
+    let currentPartOfSpeech = ref('');
+
+    const rule = title => {
+        titles.value.forEach((e, index) => {
             if (title === e) {
                 console.log('e')
-                this.currentPartOfSpeech = this.partsOfSpeech[index];
+                currentPartOfSpeech.value = partsOfSpeech.value[index];
             }
         })
         
-        console.log(this.currentPartOfSpeech)
+        console.log(currentPartOfSpeech)
+    }
+
+    return {
+        titles, partsOfSpeech, currentPartOfSpeech,
+        rule
     }
 },
+// data() {
+//     return {
+//         titles: ['Существительные', 'Прилагательные', 'Глаголы'],
+//         partsOfSpeech: ['Существительное', 'Прилагательное', 'Глагол'],
+//         currentPartOfSpeech: ''
+//     }
+// },
+// methods: {
+//     rule(title) {
+//         this.titles.forEach((e, index) => {
+//             if (title === e) {
+//                 console.log('e')
+//                 this.currentPartOfSpeech = this.partsOfSpeech[index];
+//             }
+//         })
+        
+//         console.log(this.currentPartOfSpeech)
+//     }
+// },
 components: {
     HWordsList, HAccordion
 },
