@@ -9,18 +9,12 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import { Words } from '@/main';
 import HBorder from './HBorder.vue'
 import HWordsList from './HWordsList.vue'
-// export default {
-// components: { HBorder, HWordsList},
-// name: 'h-column',
-// props: {
-//   words: Array,
-//   partOfSpeech: String
-// }
-// }
+
 interface Props {
-  words: string[],
+  words: Words,
   partOfSpeech: string
 }
 

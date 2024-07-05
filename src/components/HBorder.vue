@@ -4,12 +4,6 @@
 </div>
 </template>
 
-<script>
-export default{
-name: 'h-border'
-}
-</script>
-
 <style scoped>
 .border-container {
     background-color: var(--main-white);

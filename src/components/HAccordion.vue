@@ -22,11 +22,11 @@
       </div>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 export default{
   name: 'h-accordion'
 }
-</script>
+</script> -->
 
 <script lang="ts" setup>
 import {defineProps} from 'vue'

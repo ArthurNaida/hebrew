@@ -36,22 +36,7 @@ import axios, { AxiosResponse } from "axios"
 import { computed, ref } from 'vue';
 import HSearchForm from './HSearchForm.vue';
 import HBorder from './HBorder.vue';
-class Word {
-  partOfSpeech: string = '';
-  value: string = '';
-  isEmpty(): boolean {
-    return this.value === ''
-  }
-  constructor(partOfSpeech: string, value: string) {
-    this.partOfSpeech = partOfSpeech;
-    this.value = value;
-  }
-}
-interface Letters {
-  [key: string]: string;
-}
-type Words = Array<Word>
-
+import { Word, Words, Letters } from '@/main'
 
 const words = ref<Words>([]);
 
@@ -59,8 +44,6 @@ let isAxiosLoad = ref<boolean>(false);
 let isAxiosError = ref<boolean>(false);
 let isFirstShow = ref<boolean>(true)
 let isWords = computed(() => {return words.value.length !== 0})
-
-// words.push(new Word())
 
 const windowSize = ref({
   width: window.innerWidth,
@@ -74,37 +57,37 @@ function useWindowResize() {
 }
 
 useWindowResize()
+
 const isMobile = computed(() => {
   return windowSize.value.width > 600 ? false : true
 })
 const parseWords = (res: AxiosResponse<any, any>) => {
-console.log(words)
+
 if (res.data[0] !== 0) {
   Object.entries(res.data).forEach((e: [string, any]) => {
     words.value.push(new Word(e[1], e[0]));
   });
-  console.log(res.data)
 }
 } 
 const sendRoot = async(letters: Letters, serverUrl: string) => {
-const {letter1, letter2, letter3} = letters;
-await axios({
-  url: `${serverUrl}/post`,
-  method: 'post',
-  data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${letter1}&r2=${letter2}&r1=${letter3}`}),
-  headers: {
-    'Accept' : 'application/json',
-    "Content-Type": 'application/json'
-  }
-})
-.then(() => {isAxiosError.value = false})
+  const {letter1, letter2, letter3} = letters;
+  await axios({
+    url: `${serverUrl}/post`,
+    method: 'post',
+    data: JSON.stringify({"url": `http://www.pealim.com/ru/dict/?pos=all&num-radicals=all&rf=${letter1}&r2=${letter2}&r1=${letter3}`}),
+    headers: {
+      'Accept' : 'application/json',
+      "Content-Type": 'application/json'
+    }
+  })
+  .then(() => {isAxiosError.value = false})
 } 
 const getWords = async(serverUrl: string) => {
-await axios.get(`${serverUrl}/get`)
-.then(res => {
-  parseWords(res);
-})
-.catch(e => {words.value = []; console.log(e)})
+  await axios.get(`${serverUrl}/get`)
+  .then(res => {
+    parseWords(res);
+  })
+  .catch(e => {words.value = []; console.log(e)})
 }
 const clearWords = () => {
   while (words.value.length > 0) {
@@ -152,5 +135,4 @@ const onSubmit = async(letters: Letters, serverUrl: string) => {
 .error {
   margin: auto;
 }
-
 </style>

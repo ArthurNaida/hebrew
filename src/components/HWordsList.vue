@@ -4,14 +4,22 @@
     </template>
 </template>
 
-<script>
-export default {
-name: 'h-words-list',
-props: {
-  words: Array,
-  partOfSpeech: String
+<script setup lang="ts">
+// export default {
+// name: 'h-words-list',
+// props: {
+//   words: Array,
+//   partOfSpeech: String
+// }
+// }
+import { defineProps } from 'vue';
+import { Words } from '@/main';
+
+interface Props {
+    words: Words,
+    partOfSpeech: String
 }
-}
+defineProps<Props>();
 </script>
 
 <style scoped>

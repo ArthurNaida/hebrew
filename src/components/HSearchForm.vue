@@ -16,35 +16,23 @@
 </h-border>
 </template>
 
-<script>
+<script setup lang="ts">
+import { Letters } from '@/main';
 import HBorder from './HBorder.vue';
 import HSubmit from './HSubmit.vue';
-export default {
-name: 'h-search-root',
-components: {HBorder, HSubmit},
-setup(_, {emit}) {
-    const letters = {
-        letter1: '',
-        letter2: '',
-        letter3: ''
-    }
-    
-    const onSubmitRoot = () => {
-        emit('submitRoot', letters)
-    }
+import { defineEmits } from 'vue';
 
-    return {
-        letters,
-        onSubmitRoot
-    }
+const letters: Letters = {
+    letter1: '',
+    letter2: '',
+    letter3: ''
 }
-// data() {
-//     return {
-//         letter1: '',
-//         letter2: '',
-//         letter3: ''
-//     }
-// }
+const emit = defineEmits<{
+    submitRoot: [val: Letters]
+}>()
+
+const onSubmitRoot: any = () => {
+    emit('submitRoot', letters)
 }
 </script>
 
