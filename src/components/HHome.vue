@@ -59,7 +59,7 @@ function useWindowResize() {
 useWindowResize()
 
 const isMobile = computed(() => {
-  return windowSize.value.width > 600 ? false : true
+  return windowSize.value.width > 820 ? false : true
 })
 const parseWords = (res: AxiosResponse<any, any>) => {
 

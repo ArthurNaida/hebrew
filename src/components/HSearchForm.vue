@@ -41,6 +41,7 @@ input {
     border: 0;
     border-bottom: 2px solid #000;
     font-size: 56px;
+    width: 1em;
     background: var(--main-white);
 }
 input:focus-visible {

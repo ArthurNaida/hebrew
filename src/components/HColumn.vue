@@ -1,10 +1,13 @@
 <template>
-<h-border class="container">
-  <h2 class="title"><slot></slot></h2>
-  <div class="list">
-    <h-words-list :words="words" :partOfSpeech="partOfSpeech"></h-words-list>
-  </div>
-</h-border>
+<div class="container">
+
+  <h-border>
+    <h2 class="title"><slot></slot></h2>
+    <div class="list">
+      <h-words-list :words="words" :partOfSpeech="partOfSpeech"></h-words-list>
+    </div>
+  </h-border>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -22,12 +25,14 @@ defineProps<Props>()
 </script>
 
 <style scoped>
-.container {
+/* .container {
   margin: 20px;
+} */
+.title {
+  padding: 20px;
+  border-bottom: 2px black solid;
 }
-.list {
-  border-top: 2px solid #000;
-}
+
 .list:empty {
   display: none;
 }
