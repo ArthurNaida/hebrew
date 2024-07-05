@@ -1,6 +1,6 @@
 <template>
-    <template v-for="([word, wordPartOfSpeech], index) in words" :key="index">
-        <div class="word" v-if="wordPartOfSpeech === partOfSpeech">{{word}}</div>
+    <template v-for="(word, index) in words" :key="index">
+        <div class="word" v-if="word.partOfSpeech === partOfSpeech">{{word.value}}</div>
     </template>
 </template>
 

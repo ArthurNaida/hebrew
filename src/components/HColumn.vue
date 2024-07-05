@@ -7,17 +7,24 @@
 </h-border>
 </template>
 
-<script>
+<script setup lang="ts">
+import { defineProps } from 'vue'
 import HBorder from './HBorder.vue'
 import HWordsList from './HWordsList.vue'
-export default {
-components: { HBorder, HWordsList},
-name: 'h-column',
-props: {
-  words: Array,
-  partOfSpeech: String
+// export default {
+// components: { HBorder, HWordsList},
+// name: 'h-column',
+// props: {
+//   words: Array,
+//   partOfSpeech: String
+// }
+// }
+interface Props {
+  words: string[],
+  partOfSpeech: string
 }
-}
+
+defineProps<Props>()
 </script>
 
 <style scoped>
