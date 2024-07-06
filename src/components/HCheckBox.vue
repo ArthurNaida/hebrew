@@ -1,6 +1,6 @@
 <template>
 <input type="checkbox"
-@input="(e) => $emit('update:checked', e.target.checked)"
+@input="onCheck"
 :checked="checked"
 :id="id"
 :name="name">
@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import Bookmark from '@/components/HBookmarkSVG.vue'
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 interface Props {
     id: string;
@@ -21,6 +21,11 @@ interface Props {
     checked: boolean;
 }
 defineProps<Props>();
+
+const emit = defineEmits(['update:checked'])
+const onCheck = (event: Event) => {
+    emit('update:checked', (event.target as any).checked)
+}  
 </script>
 
 <style scoped>

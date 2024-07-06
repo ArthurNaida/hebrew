@@ -1,8 +1,11 @@
 <template>
 <div class="container">
-  <h-search-form @submitRoot="(letters) => onSubmit(letters, 'https://hebrew-gztg.onrender.com')" class="root-container"></h-search-form>
+  <h-search-form class="root-container" 
+  @submitRoot="(letters) => {
+    onSubmit(letters, 'https://hebrew-gztg.onrender.com');
+  }">
+  </h-search-form>
   
-  <!-- <Transition name="slide-fade"> -->
   <div class="container-response" v-if="!isFirstShow">
     <Transition name="slide-fade">
     <div class="main-table" v-if="!isAxiosLoad && isWords && !isAxiosError && !isMobile">
@@ -21,7 +24,6 @@
       <h1>Нет слов с таким корнем!</h1>
     </h-border>
   </div>
-  <!-- </Transition> -->
   <div class="loader-container" v-if="isAxiosLoad">
     <h-loading></h-loading>
   </div>
@@ -36,7 +38,7 @@ import axios, { AxiosResponse } from "axios"
 import { computed, ref } from 'vue';
 import HSearchForm from './HSearchForm.vue';
 import HBorder from './HBorder.vue';
-import { Word, Words, Letters } from '@/main'
+import { Word, Words, Letters, useWindowResize } from '@/main'
 
 const words = ref<Words>([]);
 
@@ -45,18 +47,18 @@ let isAxiosError = ref<boolean>(false);
 let isFirstShow = ref<boolean>(true)
 let isWords = computed(() => {return words.value.length !== 0})
 
-const windowSize = ref({
+const windowSize = ref<{[key: string]: number}>({
   width: window.innerWidth,
   height: window.innerHeight
 })
-function useWindowResize() {
-  window.addEventListener('resize', () => {
-    windowSize.value.width = window.innerWidth;
-    windowSize.value.height = window.innerHeight;
-  })
-}
+// function useWindowResize(windowSize: {[key: string]: number}) {
+//   window.addEventListener('resize', () => {
+//     windowSize.width = window.innerWidth;
+//     windowSize.height = window.innerHeight;
+//   })
+// }
 
-useWindowResize()
+useWindowResize(windowSize.value)
 
 const isMobile = computed(() => {
   return windowSize.value.width > 820 ? false : true

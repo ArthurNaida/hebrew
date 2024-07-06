@@ -22,4 +22,4 @@ git commit -m 'deploy'
 # если вы публикуете по адресу https://<USERNAME>.github.io/<REPO>
 git push git@github.com:ArthurNaida/hebrew.git master:gh-pages
 
-cd -
+# cd -

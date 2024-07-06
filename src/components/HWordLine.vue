@@ -29,9 +29,12 @@ const checkOn = ref<boolean>(false)
 </script>
 
 <style scoped>
+label {
+    display: block;
+}
 .container {
     padding: 0;
-  margin: 0;
+    margin: 0;
 }
 .wrapper {
     display: flex;

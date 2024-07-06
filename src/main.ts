@@ -21,4 +21,11 @@ export interface Letters {
 
 export type Words = Array<Word>
 
+export function useWindowResize(windowSize: {[key: string]: number}) {
+    window.addEventListener('resize', () => {
+        windowSize.width = window.innerWidth;
+        windowSize.height = window.innerHeight;
+    })
+}
+
 createApp(App).mount('#app');
