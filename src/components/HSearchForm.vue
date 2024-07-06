@@ -10,7 +10,7 @@
             <h1>.</h1>
             <input v-model="letters.letter1" pattern="[א-ת]" maxlength="1" size="1" required>
           </div>
-          <h-submit class="submit" :value="'Отправить'"></h-submit>
+          <h-submit class="submit" :value="'Найти'"></h-submit>
         </form> 
       </div>
 </h-border>

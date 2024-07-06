@@ -51,12 +51,6 @@ const windowSize = ref<{[key: string]: number}>({
   width: window.innerWidth,
   height: window.innerHeight
 })
-// function useWindowResize(windowSize: {[key: string]: number}) {
-//   window.addEventListener('resize', () => {
-//     windowSize.width = window.innerWidth;
-//     windowSize.height = window.innerHeight;
-//   })
-// }
 
 useWindowResize(windowSize.value)
 

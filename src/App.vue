@@ -1,30 +1,29 @@
 <template>
-  <h-home/>
+  <div class="app-container vw-100 vh-100">
+    <h-sidebar :titles="[
+      'Поиск', 'Избранное', 'Практика'
+    ]"/>
+    <h-home/>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import HelloWorld from './components/HelloWorld.vue';
 import HHome from './components/HHome.vue';
+import HSidebar from '@/components/HSidebar.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    HHome
+    HHome, HSidebar
   }
 });
 </script>
 
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
-
+.app-container {
+  display: flex;
+}
 #app {
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -32,11 +31,8 @@ export default defineComponent({
   text-align: center;
   --main-white: var(--bs-light);
   --main-dark: var(--bs-gray-dark);
-  width: 100vw;
-  height: 100vh;
 }
 body {
-
   --layout-bg-color: #00308F; 
   background-color: var(--layout-bg-color) !important;
 }
