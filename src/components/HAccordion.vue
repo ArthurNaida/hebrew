@@ -26,3 +26,24 @@
 import {defineProps} from 'vue'
 defineProps<{titles: Array<string>}>();
 </script>
+
+<style>
+.collapse {
+  visibility: hidden;
+}
+.collapse.show {
+  visibility: visible;
+  display: block;
+}
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: 0.25s !important;
+  transition-duration: 0.25s !important;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+}
+</style>
