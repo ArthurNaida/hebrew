@@ -1,21 +1,25 @@
 <template>
   <div class="app-container vw-100 vh-100">
-    <h-sidebar :titles="[
-      'Поиск', 'Избранное', 'Практика'
+    <h-sidebar :pages="[
+      {title: 'Поиск', path: '/home'},
+      {title: 'Избранное', path: '/saved'},
+      {title: 'Практика', path: '/practice'}
     ]"/>
-    <h-home/>
+    <h-layout>
+      <RouterView/>
+    </h-layout>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HHome from './components/HHome.vue';
 import HSidebar from '@/components/HSidebar.vue';
+import HLayout from '@/components/HLayout.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    HHome, HSidebar
+    HSidebar, HLayout
   }
 });
 </script>

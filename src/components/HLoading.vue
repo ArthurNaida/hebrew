@@ -28,8 +28,8 @@ props: {
 <style scoped>
 .loading-parent {
     position: relative;
-    width: 100%;
+    width: 100px;
     margin: 0 auto;
-    height: 300px;
+    height: 100px;
 }
 </style>

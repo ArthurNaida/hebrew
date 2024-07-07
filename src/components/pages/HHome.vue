@@ -1,21 +1,21 @@
 <template>
-<div class="container">
-  <h-search-form class="root-container" 
+  <h-search-form 
   @submitRoot="(letters) => {
     onSubmit(letters, 'https://hebrew-gztg.onrender.com');
   }">
   </h-search-form>
   
-  <div class="container-response" v-if="!isFirstShow">
-    <Transition name="slide-fade">
+  <div class="container-response pt-3 w-100" v-if="!isFirstShow">
+    <Transition name="slide-fade" mode="in-out">
     <div class="main-table" v-if="!isAxiosLoad && isWords && !isAxiosError && !isMobile">
       <h-column class="content" :words="words" :partOfSpeech="'Существительное'">Существительные</h-column>      
       <h-column class="content" :words="words" :partOfSpeech="'Прилагательное'">Прилагательные</h-column>            
       <h-column class="content" :words="words" :partOfSpeech="'Глагол'">Глаголы</h-column>     
     </div>
     </Transition>
-    <Transition name="slide-fade">
-      <h-words-accordion v-if="!isAxiosLoad && isWords && !isAxiosError && isMobile" :words="words"></h-words-accordion>
+    <Transition name="slide-fade" mode="in-out">
+      <h-words-accordion v-if="!isAxiosLoad && isWords && !isAxiosError && isMobile"
+      :words="words"/>
     </Transition>
     <h-border class="error" v-if="!isAxiosLoad && isAxiosError">
       <h1>Какая-то ошибка...</h1>
@@ -23,21 +23,20 @@
     <h-border class="error" v-if="!isAxiosLoad && !isAxiosError && !isWords">
       <h1>Нет слов с таким корнем!</h1>
     </h-border>
+    <div class="loader-container" v-if="isAxiosLoad">
+      <h-loading/>
+    </div>
   </div>
-  <div class="loader-container" v-if="isAxiosLoad">
-    <h-loading></h-loading>
-  </div>
-</div>
 </template>
 
 <script setup lang="ts">
-import HColumn from './HColumn.vue';
-import HLoading from './HLoading.vue'
-import HWordsAccordion from './HWordsAccordion.vue'
+import HColumn from '@/components/HColumn.vue';
+import HLoading from '../HLoading.vue'
+import HWordsAccordion from '../HWordsAccordion.vue'
 import axios, { AxiosResponse } from "axios"
 import { computed, ref } from 'vue';
-import HSearchForm from './HSearchForm.vue';
-import HBorder from './HBorder.vue';
+import HSearchForm from '../HSearchForm.vue';
+import HBorder from '../HBorder.vue';
 import { Word, Words, Letters, useWindowResize } from '@/main'
 
 const words = ref<Words>([]);
@@ -58,12 +57,11 @@ const isMobile = computed(() => {
   return windowSize.value.width > 820 ? false : true
 })
 const parseWords = (res: AxiosResponse<any, any>) => {
-
-if (res.data[0] !== 0) {
-  Object.entries(res.data).forEach((e: [string, any]) => {
-    words.value.push(new Word(e[1], e[0]));
-  });
-}
+  if (res.data[0] !== 0) {
+    Object.entries(res.data).forEach((e: [string, any]) => {
+      words.value.push(new Word(e[1], e[0]));
+    });
+  }
 } 
 const sendRoot = async(letters: Letters, serverUrl: string) => {
   const {letter1, letter2, letter3} = letters;
@@ -85,10 +83,13 @@ const getWords = async(serverUrl: string) => {
   })
   .catch(e => {words.value = []; console.log(e)})
 }
-const clearWords = () => {
+const clearWords = async () => {
   while (words.value.length > 0) {
     words.value.pop();
   }
+}
+const showLoading = async () => {
+  isAxiosLoad.value = true;
 }
 const onSubmit = async(letters: Letters, serverUrl: string) => {
   try {
@@ -96,10 +97,12 @@ const onSubmit = async(letters: Letters, serverUrl: string) => {
       isFirstShow.value = false;
     }
 
-    isAxiosLoad.value = true;
-    clearWords();
+    await clearWords();
+    await showLoading();
     await sendRoot(letters, serverUrl);
-  } catch(e) {isAxiosError.value = true;}
+  } catch(e) {
+    isAxiosError.value = true;
+  }
 
   try {
     await getWords(serverUrl);
@@ -108,17 +111,13 @@ const onSubmit = async(letters: Letters, serverUrl: string) => {
 }
 </script>
 
-<style>
+<style scoped>
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 .slide-fade-enter-from {
   transform: translateX(20px);
   opacity: 0;
-}
-.container {
-  padding: 20px;
-  position: relative;
 }
 .main-table {
   display: flex;
@@ -130,5 +129,8 @@ const onSubmit = async(letters: Letters, serverUrl: string) => {
 }
 .error {
   margin: auto;
+}
+.loader-container {
+  width: inherit;
 }
 </style>

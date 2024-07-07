@@ -25,9 +25,6 @@ defineProps<Props>()
 </script>
 
 <style scoped>
-/* .container {
-  margin: 20px;
-} */
 .title {
   padding: 20px;
   border-bottom: 2px black solid;

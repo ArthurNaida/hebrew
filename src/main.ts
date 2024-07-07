@@ -1,4 +1,6 @@
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { router } from './router'
 import App from './App.vue';
 import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.js"
@@ -6,12 +8,12 @@ import "bootstrap/dist/js/bootstrap.js"
 export class Word {
     partOfSpeech: string = '';
     value: string = '';
-    isEmpty(): boolean {
-    return this.value === ''
+    isEmpty?(): boolean {
+        return this.value === ''
     }
     constructor(partOfSpeech: string, value: string) {
-    this.partOfSpeech = partOfSpeech;
-    this.value = value;
+        this.partOfSpeech = partOfSpeech;
+        this.value = value;
     }
 }
 
@@ -28,4 +30,4 @@ export function useWindowResize(windowSize: {[key: string]: number}) {
     })
 }
 
-createApp(App).mount('#app');
+createApp(App).use(createPinia()).use(router).mount('#app');

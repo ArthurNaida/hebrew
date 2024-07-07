@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="word-container">
     <label :for="word.value">
         <div class="wrapper">
             <div class="bookmark">
@@ -32,7 +32,7 @@ const checkOn = ref<boolean>(false)
 label {
     display: block;
 }
-.container {
+.word-container {
     padding: 0;
     margin: 0;
 }
@@ -46,7 +46,7 @@ label {
     padding: 5px 0px;
     margin: 0 auto;
 }
-.container:not(:last-child) {
+.word-container:not(:last-child) {
     border-bottom: 1px solid #000;
 }
 </style>

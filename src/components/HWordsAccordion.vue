@@ -2,12 +2,9 @@
     <h-accordion
     :titles="titles">
         <template v-for="(partOfSpeech, index) in partsOfSpeech" v-slot:[index] :key="index">
-            <!-- <template #[index]> -->
             <h-words-list
             :words="words"
-            :partOfSpeech="partOfSpeech.name">
-            </h-words-list>
-            <!-- </template> -->
+            :partOfSpeech="partOfSpeech.name"/>
         </template>
     </h-accordion>
 </template>
