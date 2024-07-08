@@ -6,7 +6,8 @@
                 <CheckBox
                 :id="word.value"
                 :name="word.value"
-                v-model:checked="checkOn"/>
+                v-model:checked="onCheck"
+                @update:checked="onSave(word)"/>
             </div>
             <div class="word">{{word.value}}</div>
         </div>
@@ -16,16 +17,30 @@
 
 <script setup lang="ts">
 import { Word } from '@/main';
-import { defineProps } from 'vue';
+import { defineProps, onUpdated, onMounted } from 'vue';
 import { ref } from 'vue';
 import CheckBox from '@/components/HCheckBox.vue';
+import { useStore } from '@/store';
 
 interface Props {
     word: Word
 }
-defineProps<Props>()
+const props = defineProps<Props>();
 
-const checkOn = ref<boolean>(false)
+const store = useStore();
+const {addWords, removeWords} = store;
+
+const onCheck = ref<boolean>();
+const onSave = (word: Word):void => {
+    onCheck.value ? addWords(word) : removeWords(word);
+}
+
+onMounted(() => {
+    onCheck.value = props.word.isSaved
+})
+onUpdated(() => {
+    onCheck.value = props.word.isSaved
+})
 </script>
 
 <style scoped>

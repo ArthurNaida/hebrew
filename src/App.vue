@@ -1,7 +1,7 @@
 <template>
   <div class="app-container vw-100 vh-100">
     <h-sidebar :pages="[
-      {title: 'Поиск', path: '/home'},
+      {title: 'Поиск', path: '/'},
       {title: 'Избранное', path: '/saved'},
       {title: 'Практика', path: '/practice'}
     ]"/>

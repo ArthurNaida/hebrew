@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.js"
 export class Word {
     partOfSpeech: string = '';
     value: string = '';
+    isSaved: boolean = false;
     isEmpty?(): boolean {
         return this.value === ''
     }
