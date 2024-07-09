@@ -1,9 +1,9 @@
 <template>
   <div class="app-container vw-100 vh-100">
     <h-sidebar :pages="[
-      {title: 'Поиск', path: '/'},
-      {title: 'Избранное', path: '/saved'},
-      {title: 'Практика', path: '/practice'}
+      {title: 'Поиск', path: '/', imgsrc: require('@/assets/search.svg')},
+      {title: 'Избранное', path: '/saved', imgsrc: require('@/assets/bookmark.svg')},
+      {title: 'Практика', path: '/practice', imgsrc: require('@/assets/award.svg')}
     ]"/>
     <h-layout>
       <RouterView/>

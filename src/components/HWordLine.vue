@@ -21,6 +21,7 @@ import { defineProps, onUpdated, onMounted } from 'vue';
 import { ref } from 'vue';
 import CheckBox from '@/components/HCheckBox.vue';
 import { useStore } from '@/store';
+import { storeToRefs } from 'pinia';
 
 interface Props {
     word: Word
@@ -28,11 +29,11 @@ interface Props {
 const props = defineProps<Props>();
 
 const store = useStore();
-const {addWords, removeWords} = store;
+const {savedWords} = storeToRefs(store);
 
 const onCheck = ref<boolean>();
 const onSave = (word: Word):void => {
-    onCheck.value ? addWords(word) : removeWords(word);
+    onCheck.value ? savedWords.value.addWords(word) : savedWords.value.removeWords(word);
 }
 
 onMounted(() => {

@@ -19,12 +19,12 @@ const props = defineProps<Props>();
 
 const store = useStore();
 const {savedWords} = storeToRefs(store);
-const { includesWord } = store;
+// const { includesWord } = store;
 
 onMounted(() => {
     props.words.map((word) => {
-        console.log(includesWord(savedWords.value, word))
-        if (includesWord(savedWords.value, word)) {
+        console.log(savedWords.value.includesWord(word))
+        if (savedWords.value.includesWord(word)) {
             word.isSaved  = true;
         }
     })
