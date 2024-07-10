@@ -1,5 +1,5 @@
 <template>
-<div class="sidebar-container h-100 flex-column flex-shrink-0 p-3 text-white bg-dark">
+<div class="sidebar-container h-100 flex-column flex-shrink-0 p-3 text-white">
     <a href="/" class="logo-link mx-auto d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <!-- <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg> -->
       <img width="100" :src="require('@/assets/logo.svg')">
@@ -62,7 +62,13 @@ defineProps<Props>();
 </script>
 
 <style>
-@media (max-width: 1200px) {
+@media (max-width: 576px) {
+  .sidebar-container {
+    display: none !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1200px) {
     /* .sidebar-container {
         display: none;
     } */
@@ -86,6 +92,7 @@ defineProps<Props>();
 }
 .sidebar-container {
   display: flex;
+  background-color: var(--main-dark);
 }
 .router-item {
   display: flex;

@@ -5,6 +5,12 @@
       {title: 'Избранное', path: '/saved', imgsrc: require('@/assets/bookmark.svg')},
       {title: 'Практика', path: '/practice', imgsrc: require('@/assets/award.svg')}
     ]"/>
+    <h-bottom-bar
+    :pages="[
+      {path: '/', imgsrc: require('@/assets/search.svg')},
+      {path: '/saved', imgsrc: require('@/assets/bookmark.svg')},
+      {path: '/practice', imgsrc: require('@/assets/award.svg')}
+    ]"/>
     <h-layout>
       <RouterView/>
     </h-layout>
@@ -15,11 +21,12 @@
 import { defineComponent } from 'vue';
 import HSidebar from '@/components/HSidebar.vue';
 import HLayout from '@/components/HLayout.vue'
+import HBottomBar from './components/HBottomBar.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    HSidebar, HLayout
+    HSidebar, HLayout, HBottomBar
   }
 });
 </script>

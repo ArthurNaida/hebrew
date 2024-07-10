@@ -51,8 +51,6 @@ export class Words extends Array<Word> {
 
     constructor() {
         super()
-        // this.includesWord = includesWord
-        // this.addWords = add
     }
 }
 
