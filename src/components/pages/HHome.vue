@@ -112,6 +112,11 @@ const onSubmit = async(letters: Letters, serverUrl: string) => {
 </script>
 
 <style scoped>
+@media screen and (max-width: 576px) {
+ .container-response {
+   margin-bottom: 100px;
+ } 
+}
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
