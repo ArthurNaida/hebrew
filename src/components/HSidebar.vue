@@ -69,9 +69,6 @@ defineProps<Props>();
 }
 
 @media (min-width: 576px) and (max-width: 1200px) {
-    /* .sidebar-container {
-        display: none;
-    } */
     .router-text {
       display: none;
     }
