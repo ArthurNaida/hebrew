@@ -2,9 +2,8 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { router } from './router'
 import App from './App.vue';
-import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap/dist/js/bootstrap.js"
-// import "./main.scss"
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.js";
 
 export class Word {
     partOfSpeech?: string = '';
@@ -59,11 +58,21 @@ export interface Letters {
     [key: string]: string;
 }
 
-export function useWindowResize(windowSize: {[key: string]: number}) {
-    window.addEventListener('resize', () => {
-        windowSize.width = window.innerWidth;
-        windowSize.height = window.innerHeight;
-    })
-}
+// export function useWindowResize(windowSize: {[key: string]: number}) {
+//     window.addEventListener('resize', () => {
+//         windowSize.width = window.innerWidth;
+//         windowSize.height = window.innerHeight;
+//     })
+// }
+
+// export async function useActivePage(activePage: string) {
+//     const router = useRouter()
+//     console.log(activePage)
+//     console.log(router.currentRoute.value.fullPath)
+//     onMounted(async () => {
+//         await router.isReady()
+//         return router.currentRoute.value.fullPath
+//     })
+// }
 
 createApp(App).use(createPinia()).use(router).mount('#app');

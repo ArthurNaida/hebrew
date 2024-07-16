@@ -37,28 +37,27 @@
   </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
 import { ref } from 'vue';
-import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
-onMounted(async () => {
-  await router.isReady()
-  activePage.value = router.currentRoute.value.fullPath
-})
-
-const activePage = ref<string>()
 interface Props {
     pages: Array<{
       path: string,
-      title: string,
+      title?: string,
       imgsrc: string,
       imgalt?: string
     }>;
 }
 defineProps<Props>();
 
+const activePage = ref<string>();
+
+const router = useRouter()
+onMounted(async () => {
+  await router.isReady()
+  activePage.value = router.currentRoute.value.fullPath
+})
 </script>
 
 <style>

@@ -37,7 +37,8 @@ import axios, { AxiosResponse } from "axios"
 import { computed, ref } from 'vue';
 import HSearchForm from '../HSearchForm.vue';
 import HBorder from '../HBorder.vue';
-import { Word, Words, Letters, useWindowResize } from '@/main'
+import { Word, Words, Letters } from '@/main';
+import { useWindowResize } from '@/hooks';
 
 const words = ref<Words>([]);
 
