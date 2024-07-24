@@ -32,7 +32,7 @@ const emit = defineEmits<{
 }>()
 
 const onSubmitRoot: any = () => {
-    emit('submitRoot', letters)
+    emit('submitRoot', letters);
 }
 </script>
 

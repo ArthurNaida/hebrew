@@ -7,47 +7,22 @@
     :mouse-drag="false"
     :snap-align="'center'" 
     :style="'width: inherit'">
-      <slide v-for="(word, index) in wordsByLang" :key="index">
-        <h-border>
-          <div class="carousel__item" @click="changeLang(word)">{{ word.currentLang === 'heb' ? word.heb : word.rus }}</div>
-        </h-border>
-      </slide>
+      <slot></slot>
       <template #addons="{ slidesCount }">
-        <Navigation v-if="slidesCount > 1 && windowSize.width > 576" />
+        <navigation v-if="slidesCount > 1 && windowSize.width > 576" />
         <pagination v-if="slidesCount > 1 && windowSize.width > 576" />
       </template>
     </carousel>
   </template>
 <script setup lang="ts">
-import { useStore } from '@/store';
-import { storeToRefs } from 'pinia';
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import HBorder from './HBorder.vue';
+import { Carousel, Pagination, Navigation } from 'vue3-carousel';
 import { useWindowResize } from '@/hooks';
-import { ref } from 'vue';
 let windowSize = {
   width: window.innerWidth,
   height: window.innerHeight
 }
 useWindowResize(windowSize)
-
-const store = useStore();
-const {savedWords} = storeToRefs(store);
-
-const wordsByLang = ref(savedWords.value.map((word) => {
-  console.log(word)
-  if (word.value !== undefined) {
-    let heb = word.value.split('-')[0];
-    let rus = word.value.split('-')[1];
-    let currentLang = 'heb';
-    
-    return {heb, rus, currentLang};
-  }
-}))
-function changeLang(word: {heb: string, rus: string, currentLang: 'heb' | 'rus'}) {
-  word.currentLang = word.currentLang === 'heb' ? 'rus' : 'heb';
-}
 </script>
   
 
