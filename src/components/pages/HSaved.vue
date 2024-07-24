@@ -2,11 +2,10 @@
     <Transition name="slide-fade" mode="in-out">
         <div class="container">
             <template v-if="savedWords.length !== 0">
-                <h-border class="container">
+                <h-border>
                     <h1>Сохраненные слова</h1>
                 </h-border>
                 <div class="container mt-3">
-
                     <h-words-accordion
                 :words="savedWords"/>
                 </div>
