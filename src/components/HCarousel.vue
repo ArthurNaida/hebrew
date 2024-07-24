@@ -4,6 +4,7 @@
     :wrap-around="true"
     :pause-autoplay-on-hover="false"
     :transition="200"
+    :mouse-drag="false"
     :snap-align="'center'" 
     :style="'width: inherit'">
       <slide v-for="(word, index) in wordsByLang" :key="index">
