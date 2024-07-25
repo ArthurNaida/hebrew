@@ -5,7 +5,7 @@
                 <h-border>
                     <h1>Сохраненные слова</h1>
                 </h-border>
-                <div class="container mt-3">
+                <div class="mt-3">
                     <h-words-accordion
                 :words="savedWords"/>
                 </div>

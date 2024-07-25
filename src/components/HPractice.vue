@@ -3,12 +3,19 @@
         <h-border>
             <h1>Практика</h1>
         </h-border>
+        <div class="mt-3" v-if="savedWords.length === 0">
+            <h-border>
+                Сохраните слова из поиска, чтобы начать практиковаться!
+            </h-border>
+        </div>
     </div>
-    <h-switch-button @switchLang="switchCommonLang">{{ commonLang }}</h-switch-button>
-    <h-carousel>
+    <h-switch-button
+    v-if="savedWords.length !== 0" 
+    @switchLang="switchCommonLang">{{ commonLang }}</h-switch-button>
+    <h-carousel class="carousel">
         <slide v-for="(word, index) in wordsByLang" :key="index">
             <h-border>
-            <div class="carousel__item" @click="switchLangInWord(word)">{{ word.currentLang === 'heb' ? word.heb : word.rus }}</div>
+                <div class="carousel__item" @click="switchLangInWord(word)">{{ word.currentLang === 'heb' ? word.heb : word.rus }}</div>
             </h-border>
         </slide>
     </h-carousel>
@@ -30,7 +37,6 @@ const {savedWords} = storeToRefs(store);
 let commonLang = ref<string>('HEB')
 
 const wordsByLang = ref(savedWords.value.map((word) => {
-  console.log(word)
   if (word.value !== undefined) {
     let heb = word.value.split('-')[0];
     let rus = word.value.split('-')[1];
@@ -43,7 +49,6 @@ function switchCommonLang() {
     commonLang.value = commonLang.value === 'HEB' ? 'RUS' : 'HEB';
 
     wordsByLang.value.forEach(word => {
-        console.log(word?.currentLang)
         word.currentLang = commonLang.value === 'HEB' ? 'heb' : 'rus';
     });
 }
@@ -51,3 +56,9 @@ function switchLangInWord(word: {heb: string, rus: string, currentLang: string})
   word.currentLang = word.currentLang === 'heb' ? 'rus' : 'heb';
 }
 </script>
+
+<style scoped>
+.carousel {
+    margin-bottom: 100px;
+}
+</style>
